@@ -1,0 +1,83 @@
+package idfos.sdf.scheduling.MEC;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
+import idfos.sdf.base.sdfgraph.*;
+
+public class MEC_IP {
+	
+	private int IP;
+	
+	private ArrayList<?>[] pros = new ArrayList<?>[3];
+	
+	private int clock = 0;
+	
+	private ArrayList<HashMap<MECedge,String>> Tran = new ArrayList<HashMap<MECedge,String>>();
+	
+	private ArrayList<HashMap<MECvertex,String>> Task = new ArrayList<HashMap<MECvertex,String>>();
+	
+	public MEC_IP(HashMap<MECvertex,String> hm, SDFgraph<MECvertex, MECedge> g) {
+		
+		Set<MECvertex> vset = g.getVerticesSet();
+		
+		HashMap<MECvertex,String> hminitial = new HashMap<MECvertex,String>();
+		
+		//初始化，找出能直接执行的节点，将他们添加到Task中
+		
+		for(MECvertex v:vset) {
+			if(g.getAllIncomingEdgeID(g.getIDofVertex(v))==null) {
+				hminitial.put(v, v.getMappedProcessorType());
+			}
+		}
+		
+		Task.add(hminitial);
+		Tran.add(null);
+		
+		
+	}
+
+	public ArrayList<HashMap<MECvertex,String>> getTask() {
+		return Task;
+	}
+
+	public void setTask(ArrayList<HashMap<MECvertex,String>> task) {
+		Task = task;
+	}
+
+	public ArrayList<HashMap<MECedge,String>> getTran() {
+		return Tran;
+	}
+
+	public void setTran(ArrayList<HashMap<MECedge,String>> tran) {
+		Tran = tran;
+	}
+
+	public int getClock() {
+		return clock;
+	}
+
+	public void setClock(int clock) {
+		this.clock = clock;
+	}
+
+	public ArrayList<?>[] getPros() {
+		return pros;
+	}
+
+	public void setPros(ArrayList<?>[] pros) {
+		this.pros = pros;
+	}
+
+	public int getIP() {
+		return IP;
+	}
+
+	public void setIP(int iP) {
+		IP = iP;
+	}
+	
+	
+
+}
